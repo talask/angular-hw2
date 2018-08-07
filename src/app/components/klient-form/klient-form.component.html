@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="card mb-3">
+    <div class="card-body">
+      <form novalidate (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input 
+          type="text" 
+          id="name" 
+          class="form-control" 
+          [(ngModel)]="item.name" 
+          [ngClass]="{'is-invalid': itemName.errors && itemName.touched}" 
+          #itemName="ngModel"  
+          name="name"
+          required
+          minlength="4"
+          >
+        <div class="invalid-feedback" [hidden]="!itemName.errors?.required">Name mustn't be empty</div>
+        <div class="invalid-feedback" [hidden]="!itemName.errors?.minlength">Name must be at least 4 chars</div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          [(ngModel)]="item.email" 
+          [ngClass]="{'is-invalid': itemEmail.errors && itemEmail.touched}" 
+          #itemEmail="ngModel"  
+          name="email" 
+          required
+          email
+          >
+          <div class="invalid-feedback" [hidden]="!itemEmail.errors?.required">Name mustn't be empty</div>
+          <div class="invalid-feedback" [hidden]="!itemEmail.errors?.email">Wrong email</div>  
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input 
+          type="number" 
+          id="age"  
+          class="form-control" 
+          [(ngModel)]="item.age" 
+          [ngClass]="{'is-invalid': itemAge.errors && itemAge.touched}" 
+          #itemAge="ngModel" 
+          name="age"
+          required 
+          pattern="\d+"
+          >
+          <div class="invalid-feedback" [hidden]="!itemAge.errors?.required">Age mustn't be empty</div>
+          <div class="invalid-feedback" [hidden]="!itemAge.errors?.pattern">Item age requred</div>  
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input 
+          type="text" 
+          id="phone" 
+          class="form-control" 
+          [(ngModel)]="item.phone" 
+          [ngClass]="{'is-invalid': itemPhone.errors && itemPhone.touched}" 
+          #itemPhone="ngModel" 
+          name="phone"
+          required
+          pattern="^\+\d{2}\(\d{3}\)\s\d{3}[-]\d{2}[-]\d{2}$" 
+          placeholder="+38(000) 000-00-00"
+          >
+        <div class="invalid-feedback" [hidden]="!itemPhone.errors?.required">Phone mustn't be empty</div>
+        <div class="invalid-feedback" [hidden]="!itemPhone.errors?.pattern">Wrong phone, must be +38(000) 000-00-00</div>  
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment</label>
+          <textarea 
+          class="form-control" 
+          id="comment"  
+          rows="3" 
+          [(ngModel)]="item.comment"
+          [ngClass]="{'is-invalid': itemComment.errors && itemComment.touched}" 
+          #itemComment="ngModel" 
+          name="comment"
+          required
+          >
+        </textarea>
+        <div class="invalid-feedback" [hidden]="!itemComment.errors?.required">Comment mustn't be empty</div>
+        </div>
+         <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Add</button>
+      </form>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Age</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let el of klient; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ el.name }}</td>
+        <td>{{ el.email }}</td>
+        <td>{{ el.age }}</td>
+        <td>{{ el.phone }}</td>
+        <td>{{ el.comment }}</td>
+        <td><button class="btn btn-secondary active"  (click)="deleteItem(el.id)">&otimes;</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
